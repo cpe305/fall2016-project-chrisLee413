@@ -2,6 +2,16 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="16" tileheight="16" nextobjectid="1">
  <tileset firstgid="1" name="LightWorld - Before" tilewidth="16" tileheight="16" tilecount="65536" columns="256">
   <image source="light_world-1.png" width="4096" height="4096"/>
+  <tile id="43913">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="43914">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Tile Layer 1" width="32" height="32">
   <data encoding="csv">

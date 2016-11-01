@@ -10,71 +10,88 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.clee186.entities.Player;
+import com.clee186.Characters.Link;
 
 public class Play implements Screen {
 
-	private TiledMap map;
-	private OrthogonalTiledMapRenderer renderer;
-	private OrthographicCamera camera;
-	private Player hero;
+  private TiledMap map;
+  private OrthogonalTiledMapRenderer renderer;
+  private OrthographicCamera camera;
+  private Link hero;
+  private float mapWidth;
+  private float mapHeight;
 
-	public void show() {
-		TmxMapLoader loader = new TmxMapLoader();
-		map = loader.load("maps/LinksHouse.tmx");
+  public void show() {
+    TmxMapLoader loader = new TmxMapLoader();
+    map = loader.load("maps/LinksHouse.tmx");
 
-		renderer = new OrthogonalTiledMapRenderer(map);
+    mapWidth = map.getProperties().get("width", Integer.class)
+        * map.getProperties().get("tilewidth", Integer.class);
+    mapHeight = map.getProperties().get("height", Integer.class)
+        * map.getProperties().get("tileheight", Integer.class);
 
-		camera = new OrthographicCamera();
+    renderer = new OrthogonalTiledMapRenderer(map);
 
-		hero = new Player(new Sprite(new Texture("img/player.png")), (TiledMapTileLayer) map.getLayers().get(0));
-		hero.setSize(hero.getWidth() * .16f, hero.getHeight() * .16f);
-		hero.setPosition(12 * hero.getCollisionLayer().getTileWidth(), (hero.getCollisionLayer().getHeight() - 21) * hero.getCollisionLayer().getTileHeight());
+    camera = new OrthographicCamera();
 
-		Gdx.input.setInputProcessor(hero);
+    hero = new Link(new Sprite(new Texture("img/player.png")),
+        (TiledMapTileLayer) map.getLayers().get(0));
+    hero.setSize(hero.getWidth() * .16f, hero.getHeight() * .16f);
+    hero.setPosition(12 * hero.getCollisionLayer().getTileWidth(),
+        (hero.getCollisionLayer().getHeight() - 21) * hero.getCollisionLayer().getTileHeight());
 
-	}
+    Gdx.input.setInputProcessor(hero);
+  }
 
-	public void render(float delta) {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+  public void render(float delta) {
+    Gdx.gl.glClearColor(0, 0, 0, 1);
+    Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-		if(camera.position.x != (hero.getX() + (hero.getWidth() / 2))){
-			camera.position.set(hero.getX() + (hero.getWidth() / 2), hero.getY() + (hero.getHeight() / 2), 0);
-			camera.update();
-		}
-		System.out.println("camera: " + camera.position.x);
-		System.out.println("camera: " + camera.position.x);
+    camera.position.set(hero.getX() + (hero.getWidth() / 2), hero.getY() + (hero.getHeight() / 2),
+        0);
 
-		renderer.setView(camera);
-		renderer.render();
+    if (camera.position.x - camera.viewportWidth / 2 < 0)
+      camera.position.x = camera.viewportWidth / 2;
+    else if (camera.position.x + camera.viewportWidth / 2 > mapWidth)
+      camera.position.x = mapWidth - camera.viewportWidth / 2;
 
-		renderer.getSpriteBatch().begin();
-		hero.draw(renderer.getSpriteBatch());
-		renderer.getSpriteBatch().end();
-	}
+    if (camera.position.y - camera.viewportHeight / 2 < 0) {
+      camera.position.y = camera.viewportHeight / 2;
+    } else if (camera.position.y + camera.viewportHeight / 2 > mapHeight) {
+      camera.position.y = mapHeight - camera.viewportHeight / 2;
+    }
 
-	public void resize(int width, int height) {
-		camera.viewportWidth = width / 7;
-		camera.viewportHeight = height / 6;
-		camera.update();
-	}
+    camera.update();
 
-	public void pause() {
+    renderer.setView(camera);
+    renderer.render();
 
-	}
+    renderer.getSpriteBatch().begin();
+    hero.draw(renderer.getSpriteBatch());
+    renderer.getSpriteBatch().end();
+  }
 
-	public void resume() {
+  public void resize(int width, int height) {
+    camera.viewportWidth = width / 7;
+    camera.viewportHeight = height / 6;
+    camera.update();
+  }
 
-	}
+  public void pause() {
 
-	public void hide() {
-		dispose();
-	}
+  }
 
-	public void dispose() {
-		map.dispose();
-		renderer.dispose();
-	}
+  public void resume() {
+
+  }
+
+  public void hide() {
+    dispose();
+  }
+
+  public void dispose() {
+    map.dispose();
+    renderer.dispose();
+  }
 
 }
