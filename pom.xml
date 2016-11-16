@@ -114,6 +114,15 @@
 	</repositories>
 
 	<build>
+	<pluginManagement>
+      		<plugins>
+       			<plugin>
+        			<groupId>org.sonarsource.scanner.maven</groupId>
+          	   		<artifactId>sonar-maven-plugin</artifactId>
+           	   		<version>3.2</version>
+          		</plugin>
+     		</plugins>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -125,36 +134,23 @@
 				</configuration>
 			</plugin>
 		</plugins>
+	</pluginManagement>
 	</build>
 	
-<build>
-    <pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.2</version>
-            </plugin>
-        </plugins>
-    </pluginManagement>
-</build>
-	
-<profiles>
-    <profile>
-        <id>sonar</id>
-        <activation>
-            <activeByDefault>true</activeByDefault>
-        </activation>
-        <properties>
-            <sonar.host.url>
-                http://smartr.cs.hm.edu:9000
-            </sonar.host.url>
-
-        </properties>
-    </profile>
-</profiles>
-
 	<profiles>
+		<profile>
+        		<id>sonar</id>
+       			<activation>
+        			<activeByDefault>true</activeByDefault>
+       			</activation>
+       			<properties>
+       			<sonar.host.url>
+              			http://smartr.cs.hm.edu:9000
+         		</sonar.host.url>
+
+       			</properties>
+   		</profile>
+		
 		<profile>
 			<id>desktop</id>
 			<modules>
