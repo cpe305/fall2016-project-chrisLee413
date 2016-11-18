@@ -172,8 +172,6 @@
     <property name="blocked" value=""/>
    </properties>
   </tile>
-<<<<<<< HEAD
-=======
   <tile id="43916">
    <properties>
     <property name="blocked" value=""/>
@@ -214,14 +212,11 @@
     <property name="blocked" value=""/>
    </properties>
   </tile>
->>>>>>> 7146338ebfa7aa74390de0fb9cb7239186d9a07c
   <tile id="44169">
    <properties>
     <property name="blocked" value=""/>
    </properties>
   </tile>
-<<<<<<< HEAD
-=======
   <tile id="44174">
    <properties>
     <property name="blocked" value=""/>
@@ -257,14 +252,11 @@
     <property name="blocked" value=""/>
    </properties>
   </tile>
->>>>>>> 7146338ebfa7aa74390de0fb9cb7239186d9a07c
   <tile id="44425">
    <properties>
     <property name="blocked" value=""/>
    </properties>
   </tile>
-<<<<<<< HEAD
-=======
   <tile id="44430">
    <properties>
     <property name="blocked" value=""/>
@@ -940,7 +932,6 @@
     <property name="blocked" value=""/>
    </properties>
   </tile>
->>>>>>> 7146338ebfa7aa74390de0fb9cb7239186d9a07c
  </tileset>
  <layer name="Tile Layer 1" width="32" height="32">
   <data encoding="csv">
