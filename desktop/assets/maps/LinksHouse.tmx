@@ -12,6 +12,21 @@
     <property name="blocked" value=""/>
    </properties>
   </tile>
+  <tile id="43915">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="44169">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="44425">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Tile Layer 1" width="32" height="32">
   <data encoding="csv">

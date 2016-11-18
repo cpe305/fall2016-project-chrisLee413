@@ -55,11 +55,10 @@ public class Play implements Screen {
     else if (camera.position.x + camera.viewportWidth / 2 > mapWidth)
       camera.position.x = mapWidth - camera.viewportWidth / 2;
 
-    if (camera.position.y - camera.viewportHeight / 2 < 0) {
+    if (camera.position.y - camera.viewportHeight / 2 < 0)
       camera.position.y = camera.viewportHeight / 2;
-    } else if (camera.position.y + camera.viewportHeight / 2 > mapHeight) {
+    else if (camera.position.y + camera.viewportHeight / 2 > mapHeight)
       camera.position.y = mapHeight - camera.viewportHeight / 2;
-    }
 
     camera.update();
 
@@ -74,7 +73,6 @@ public class Play implements Screen {
   public void resize(int width, int height) {
     camera.viewportWidth = width / 7;
     camera.viewportHeight = height / 6;
-    camera.update();
   }
 
   public void pause() {

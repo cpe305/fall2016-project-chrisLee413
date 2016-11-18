@@ -6,12 +6,18 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
 
 public class Link extends Sprite implements InputProcessor {
 
   // the movement velocity
   private Vector2 velocity = new Vector2();
+  
+  private boolean movingLeft = false;
+  private boolean movingRight = false;
+  private boolean movingUp = false;
+  private boolean movingDown = false;
 
   private float speed = 60 * 2;
   private TiledMapTileLayer collisionLayer;
@@ -27,25 +33,103 @@ public class Link extends Sprite implements InputProcessor {
   }
 
   public void update(float delta) {
+    
+    float oldX = getX();
+    float oldY = getY();
+    
+    boolean collisionX = false;
+    boolean collisionY = false;
 
     setX(getX() + velocity.x * delta);
+    
+    //going left
+    if (velocity.x < 0)
+      collisionX = collidesLeft();
+
+    //going right
+    else if (velocity.x > 0)
+      collisionX = collidesRight();
+    
+    if (collisionX) {
+      setX(oldX);
+      velocity.x = 0;
+    }
+    
     setY(getY() + velocity.y * delta);
 
+    //going down
+    if (velocity.y < 0)
+      collisionY = collidesBottom();
+    
+    //going up
+    else if (velocity.y > 0)
+      collisionY = collidesTop();
+    
+    if (collisionY) {
+      setY(oldY);
+      velocity.y = 0;
+    }
+  }
+  
+  private boolean isCellBlocked(float x, float y) {
+    Cell cell = collisionLayer.getCell((int)(x / collisionLayer.getTileWidth()), (int)(y / collisionLayer.getTileHeight()));
+    return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey("blocked");
+  }
+  
+  private boolean collidesRight() {
+    for (float step = 0; step < getHeight(); step += collisionLayer.getTileHeight() / 2) {
+      if(isCellBlocked(getX() + getWidth(), getY() + step))
+        return true;
+    }
+    
+    return false;
+  }
+  
+  private boolean collidesLeft() {
+    for (float step = 0; step < getHeight(); step += collisionLayer.getTileHeight() / 2) {
+      if(isCellBlocked(getX(), getY() + step))
+        return true;
+    }
+    
+    return false; 
+  }
+
+  private boolean collidesTop() {
+    for (float step = 0; step < getWidth(); step += collisionLayer.getTileWidth() / 2) {
+      if(isCellBlocked(getX() + step, getY() + getHeight()))
+        return true;
+    }
+    
+    return false;
+  }
+
+  private boolean collidesBottom() {
+    
+    for (float step = 0; step < getWidth(); step += collisionLayer.getTileWidth() / 2) {
+      if(isCellBlocked(getX() + step, getY()))
+        return true;
+    }
+    
+    return false;
   }
 
   public boolean keyDown(int keycode) {
     switch (keycode) {
       case Keys.W:
         velocity.y = speed;
+        movingUp = true;
         break;
       case Keys.A:
         velocity.x = -speed;
+        movingLeft = true;
         break;
       case Keys.S:
         velocity.y = -speed;
+        movingDown = true;
         break;
       case Keys.D:
         velocity.x = speed;
+        movingRight = true;
         break;
       default:
         break;
@@ -56,37 +140,41 @@ public class Link extends Sprite implements InputProcessor {
   public boolean keyUp(int keycode) {
     switch (keycode) {
       case Keys.W:
-        velocity.y = 0;
+        if(movingDown)
+           velocity.y = -speed;
+        else
+          velocity.y = 0;
+        
+        movingUp = false;
         break;
       case Keys.A:
-        velocity.x = 0;
+        if(movingRight)
+          velocity.x = speed;
+        else
+          velocity.x = 0;
+        
+        movingLeft = false;
         break;
       case Keys.S:
-        velocity.y = 0;
+        if(movingUp)
+          velocity.y = speed;
+        else
+          velocity.y = 0;
+        
+        movingDown = false;
         break;
       case Keys.D:
-        velocity.x = 0;
+        if(movingLeft)
+          velocity.x = -speed;
+        else
+          velocity.x = 0;
+        
+        movingRight = false;
         break;
       default:
         break;
     }
     return true;
-  }
-
-  public Vector2 getVelocity() {
-    return velocity;
-  }
-
-  public void setVelocity(Vector2 velocity) {
-    this.velocity = velocity;
-  }
-
-  public float getSpeed() {
-    return speed;
-  }
-
-  public void setSpeed(float speed) {
-    this.speed = speed;
   }
 
   public TiledMapTileLayer getCollisionLayer() {
