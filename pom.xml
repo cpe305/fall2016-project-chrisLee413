@@ -22,7 +22,7 @@
 				<artifactId>gdx</artifactId>
 				<version>1.2.0</version>
 			</dependency>
-
+			
 			<!-- android-specific dependencies -->
 			<dependency>
 				<groupId>com.badlogicgames.gdx</groupId>

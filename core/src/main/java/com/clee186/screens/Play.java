@@ -5,7 +5,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -20,10 +23,18 @@ public class Play implements Screen {
   private Link hero;
   private float mapWidth;
   private float mapHeight;
+  private float elapsedTime = 0f;
+  private TextureAtlas atlas;
+  private Animation animation;
+  private SpriteBatch batch;
 
   public void show() {
     TmxMapLoader loader = new TmxMapLoader();
     map = loader.load("maps/LinksHouse.tmx");
+    
+    atlas = new TextureAtlas(Gdx.files.internal("LinkMovement/LinkMovement.pack"));
+    animation = new Animation(1f/3f, atlas.getRegions());
+    batch = new SpriteBatch();
 
     mapWidth = map.getProperties().get("width", Integer.class)
         * map.getProperties().get("tilewidth", Integer.class);
@@ -44,6 +55,7 @@ public class Play implements Screen {
   }
 
   public void render(float delta) {
+    elapsedTime = Gdx.graphics.getDeltaTime();
     Gdx.gl.glClearColor(0, 0, 0, 1);
     Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
@@ -68,6 +80,11 @@ public class Play implements Screen {
     renderer.getSpriteBatch().begin();
     hero.draw(renderer.getSpriteBatch());
     renderer.getSpriteBatch().end();
+    
+    batch.begin();
+    batch.draw(animation.getKeyFrame(elapsedTime, true), 12 * hero.getCollisionLayer().getTileWidth(),
+        (hero.getCollisionLayer().getHeight() - 21) * hero.getCollisionLayer().getTileHeight());
+    batch.end();
   }
 
   public void resize(int width, int height) {
@@ -90,6 +107,8 @@ public class Play implements Screen {
   public void dispose() {
     map.dispose();
     renderer.dispose();
+    hero.getTexture().dispose();
+    atlas.dispose();
   }
 
 }

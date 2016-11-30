@@ -2,6 +2,7 @@ package com.clee186.core;
 
 import com.badlogic.gdx.Game;
 import com.clee186.screens.Play;
+import com.clee186.screens.Splash;
 
 public class ZeldaGame extends Game {
 
