@@ -15,6 +15,3 @@ cache:
 # Setup environment
 before_install:
 - chmod +x gradlew
-
-script:
-      - ./gradlew clean assembleDebug jacocoTestReport sonarqube
