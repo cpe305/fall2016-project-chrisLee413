@@ -1,4 +1,5 @@
 language: java
+sudo: false #faster builds
 
 jdk: oraclejdk8
 
@@ -10,3 +11,6 @@ cache:
 # Setup environment
 before_install:
 - chmod +x gradlew
+
+script:
+      - ./gradlew sonarqube -Dsonar.host.url=http://smartr.cs.hm.edu:9000
