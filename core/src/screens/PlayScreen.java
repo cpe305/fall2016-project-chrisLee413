@@ -3,6 +3,7 @@ package screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -17,16 +18,20 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.clee186.mariobros.MarioBros;
 
 import scenes.Hud;
+import sprites.Goomba;
 import sprites.Mario;
 import tools.B2WorldCreator;
+import tools.WorldContactListener;
 
 public class PlayScreen implements Screen {
   private MarioBros game;
   private Mario mario;
+  private Goomba goomba;
   private OrthographicCamera camera;
   private Viewport gamePort;
   private Hud hud;
   private TextureAtlas atlas;
+  private Music music;
   
   //Tiled map variables
   private TmxMapLoader maploader;
@@ -64,9 +69,18 @@ public class PlayScreen implements Screen {
     //allows for debug lines of our box2D world
     b2dr = new Box2DDebugRenderer();
     
-    mario = new Mario(world, this);
+    //create mario
+    mario = new Mario(this);
     
-    new B2WorldCreator(world, map);
+    new B2WorldCreator(this);
+    
+    world.setContactListener(new WorldContactListener());
+    
+    music = MarioBros.manager.get("audio/music/mario_music.ogg", Music.class);
+    music.setLooping(true);
+    music.play();
+    
+    goomba = new Goomba(this, .32f, .32f);
   }
 
   @Override
@@ -95,6 +109,8 @@ public class PlayScreen implements Screen {
     world.step(1/60f, 6, 2);
     
     mario.update(dt);
+    goomba.update(dt);
+    hud.update(dt);
     
     camera.position.x = mario.b2body.getPosition().x;
     
@@ -120,6 +136,7 @@ public class PlayScreen implements Screen {
     game.batch.setProjectionMatrix(camera.combined);
     game.batch.begin();
     mario.draw(game.batch);
+    goomba.draw(game.batch);
     game.batch.end();
     
     //set batch to draw what the Hud camera sees
@@ -132,6 +149,14 @@ public class PlayScreen implements Screen {
     gamePort.update(width, height);
   }
 
+  public TiledMap getMap(){
+	  return map;
+  }
+  
+  public World getWorld(){
+	  return world;
+  }
+  
   @Override
   public void pause() {
     // TODO Auto-generated method stub
