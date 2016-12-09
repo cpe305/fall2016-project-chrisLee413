@@ -22,11 +22,14 @@ Some Key Features:
   - State Pattern
   
     > Mario
+    
     > Turtle
   - Strategy Pattern
   
     > Item
+    
     > Enemy
+    
     > InteractiveTileObject
     
 # Contact
