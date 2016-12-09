@@ -24,13 +24,6 @@ Some Key Features:
     - Mario
     
     - Turtle
-  - Strategy Pattern
-  
-    - Item
-    
-    - Enemy
-    
-    - InteractiveTileObject
     
 # Contact
 clee186@calpoly.edu
