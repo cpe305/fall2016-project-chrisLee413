@@ -25,5 +25,7 @@ Some Key Features:
     
     - Turtle
     
+  - Observer Pattern
+    
 # Contact
 clee186@calpoly.edu
