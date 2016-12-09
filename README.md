@@ -9,8 +9,8 @@ Super Mario Bros is a 2-D side scroller where the player must race against the c
 Some Key Features:
 
   - Movement
+  
     The player will be able to move left/right and have the ability to jump.
-    
   - Attacking
   
     The player will be able to "attack" enemies by jumping on their heads and through the use of some power-ups (eventually).
@@ -21,16 +21,16 @@ Some Key Features:
 # Relevant Design Patterns
   - State Pattern
   
-    > Mario
+    - Mario
     
-    > Turtle
+    - Turtle
   - Strategy Pattern
   
-    > Item
+    - Item
     
-    > Enemy
+    - Enemy
     
-    > InteractiveTileObject
+    - InteractiveTileObject
     
 # Contact
 clee186@calpoly.edu
