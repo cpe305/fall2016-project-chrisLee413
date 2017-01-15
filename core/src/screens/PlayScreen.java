@@ -86,7 +86,7 @@ public class PlayScreen implements Screen{
       world = new World(new Vector2(0, -10), true);
       
       //allows for debug lines of box2d world.
-      b2dr = new Box2DDebugRenderer();
+      //b2dr = new Box2DDebugRenderer();
 
       creator = new B2WorldCreator(this);
 
@@ -185,7 +185,7 @@ public class PlayScreen implements Screen{
       renderer.render();
 
       //renderer Box2DDebugLines
-      b2dr.render(world, gamecam.combined);
+      //b2dr.render(world, gamecam.combined);
 
       game.batch.setProjectionMatrix(gamecam.combined);
       game.batch.begin();
@@ -250,7 +250,7 @@ public class PlayScreen implements Screen{
       map.dispose();
       renderer.dispose();
       world.dispose();
-      b2dr.dispose();
+      //b2dr.dispose();
       hud.dispose();
   }
 

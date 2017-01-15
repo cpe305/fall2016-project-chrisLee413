@@ -1,13 +1,12 @@
 package sprites;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.clee186.mariobros.MarioBros;
 
+import scenes.Hud;
 import screens.PlayScreen;
 
 public class Mushroom extends Item {
@@ -41,6 +40,7 @@ public class Mushroom extends Item {
   @Override
   public void use(Mario mario) {
     destroy();
+    Hud.addScore(50);
     mario.grow();
   }
 

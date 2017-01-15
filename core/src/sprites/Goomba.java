@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.clee186.mariobros.MarioBros;
 
+import scenes.Hud;
 import screens.PlayScreen;
 
 public class Goomba extends Enemy {
@@ -48,6 +49,7 @@ public class Goomba extends Enemy {
       destroyed = true;
       setRegion(new TextureRegion(screen.getAtlas().findRegion("goomba"), 32, 0, 16, 16));
       stateTime = 0;
+      Hud.addScore(200);
     } 
     
     else if (!destroyed) {
